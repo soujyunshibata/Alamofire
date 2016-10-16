@@ -107,6 +107,10 @@ open class SessionDelegate: NSObject {
 
 #if !os(watchOS)
 
+    /**
+     * MARK: iOS8.1以上対応にするために、URLSessionStreamTaskはコメントアウト
+     **/
+    /**
     /// Overrides default behavior for URLSessionStreamDelegate method `urlSession(_:readClosedFor:)`.
     open var streamTaskReadClosed: ((URLSession, URLSessionStreamTask) -> Void)?
 
@@ -118,7 +122,7 @@ open class SessionDelegate: NSObject {
 
     /// Overrides default behavior for URLSessionStreamDelegate method `urlSession(_:streamTask:didBecome:outputStream:)`.
     open var streamTaskDidBecomeInputAndOutputStreams: ((URLSession, URLSessionStreamTask, InputStream, OutputStream) -> Void)?
-
+    **/
 #endif
 
     // MARK: Properties
@@ -164,7 +168,8 @@ open class SessionDelegate: NSObject {
                 return sessionDidFinishEventsForBackgroundURLSession != nil
             }
         #endif
-
+        // MARK: iOS8.1以上の対応するため、URLSessionStreamTaskをコメントアウト
+        /**
         #if !os(watchOS)
             switch selector {
             case #selector(URLSessionStreamDelegate.urlSession(_:readClosedFor:)):
@@ -179,7 +184,7 @@ open class SessionDelegate: NSObject {
                 break
             }
         #endif
-
+        **/
         switch selector {
         case #selector(URLSessionDelegate.urlSession(_:didBecomeInvalidWithError:)):
             return sessionDidBecomeInvalidWithError != nil
@@ -637,7 +642,12 @@ extension SessionDelegate: URLSessionDownloadDelegate {
 
 #if !os(watchOS)
 
+// iOS8.1以上にするために、URLSessionStreamTaskをコメントアウト
+/**
 extension SessionDelegate: URLSessionStreamDelegate {
+    
+ 
+    
     /// Tells the delegate that the read side of the connection has been closed.
     ///
     /// - parameter session:    The session.
@@ -661,13 +671,14 @@ extension SessionDelegate: URLSessionStreamDelegate {
     open func urlSession(_ session: URLSession, betterRouteDiscoveredFor streamTask: URLSessionStreamTask) {
         streamTaskBetterRouteDiscovered?(session, streamTask)
     }
-
+ 
     /// Tells the delegate that the stream task has been completed and provides the unopened stream objects.
     ///
     /// - parameter session:      The session.
     /// - parameter streamTask:   The stream task.
     /// - parameter inputStream:  The new input stream.
     /// - parameter outputStream: The new output stream.
+ 
     open func urlSession(
         _ session: URLSession,
         streamTask: URLSessionStreamTask,
@@ -676,6 +687,7 @@ extension SessionDelegate: URLSessionStreamDelegate {
     {
         streamTaskDidBecomeInputAndOutputStreams?(session, streamTask, inputStream, outputStream)
     }
+ 
 }
-
+**/
 #endif

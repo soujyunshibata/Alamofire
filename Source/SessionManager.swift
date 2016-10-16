@@ -702,7 +702,8 @@ open class SessionManager {
     }
 
 #if !os(watchOS)
-
+    // iOS8.1以上に対応するため、URLSessionStreamTaskをコメントアウト
+    /**
     // MARK: - Stream Request
 
     // MARK: Hostname and Port
@@ -756,7 +757,7 @@ open class SessionManager {
         if startRequestsImmediately { stream.resume() }
         return stream
     }
-
+    **/
 #endif
 
     // MARK: - Internal - Retry Request

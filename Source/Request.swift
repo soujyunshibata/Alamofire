@@ -578,7 +578,8 @@ open class UploadRequest: DataRequest {
 // MARK: -
 
 #if !os(watchOS)
-
+//iOS8.1以上に対応するためURLSessionStreamTaskはコメントアウト
+/**
 /// Specific type of `Request` that manages an underlying `URLSessionStreamTask`.
 open class StreamRequest: Request {
     enum Streamable: TaskConvertible {
@@ -587,7 +588,7 @@ open class StreamRequest: Request {
 
         func task(session: URLSession, adapter: RequestAdapter?, queue: DispatchQueue) throws -> URLSessionTask {
             let task: URLSessionTask
-
+            
             switch self {
             case let .stream(hostName, port):
                 task = queue.syncResult { session.streamTask(withHostName: hostName, port: port) }
@@ -599,5 +600,5 @@ open class StreamRequest: Request {
         }
     }
 }
-
+**/
 #endif
